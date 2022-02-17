@@ -15,7 +15,7 @@ function displayResults(months, loan, rate, mPayments){
     let tInterest = 0;
     let originalLoan = parseInt(loan);
     let pDisplay = "$"+mPayments;
-    document.getElementById("totalPrincipalDisplay").innerHTML = originalLoan;
+    document.getElementById("totalPrincipalDisplay").innerHTML = "$" + originalLoan;
     for(term = 1; term<= months; term++){
         let interest = (loan*rate/1200);
         let principal = (mPayments - interest);
@@ -29,9 +29,8 @@ function displayResults(months, loan, rate, mPayments){
     }
     
     tCost = originalLoan + tInterest;
-    alert(tCost);
     document.getElementById("results").innerHTML = rUpdate;
     document.getElementById("paymentDisplay").innerHTML = pDisplay;
-    document.getElementById("totalInterestDisplay").innerHTML = Math.round((tInterest + Number.EPSILON)*100)/100;
-    document.getElementById("totalCostDisplay").innerHTML =Math.round(tCost);
+    document.getElementById("totalInterestDisplay").innerHTML = "$" + Math.round((tInterest + Number.EPSILON)*100)/100;
+    document.getElementById("totalCostDisplay").innerHTML = "$" + tCost.toFixed(2);
 }

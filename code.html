@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>Application: A Coding Project By Ansh Desai</title>
+    <title>Loan Shark: A Coding Project By Ansh Desai</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,7 @@
     <!--Navigation Section-->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="/img/Mark.png" class="d-inline-block align-text-top" width="30" height="24">Application</a>
+            <a class="navbar-brand" href="#"><img src="/img/Mark.png" class="d-inline-block align-text-top" width="30" height="24">Loan Shark</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,10 +36,10 @@
                         <a class="nav-link active" aria-current="page" href="code.html">The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">Git Repository</a>
+                        <a class="nav-link" target="_blank" href="https://github.com/AnshD8619/Loan-Shark">Git Repository</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">About Me</a>
+                        <a class="nav-link" target="_blank" href="PortfolioLink">About Me</a>
                     </li>
                 </ul>
             </div>
@@ -48,19 +48,69 @@
     <!--Main Section-->
     <main class="flex-shrink-0">
         <div class="container py-5 px-5 mt-5">
-            <h2 class="border-1 border-bottom border-dark">THE APPLICATION CODE</h2>
+            <h2 class="border-1 border-bottom border-dark">Loan Shark Code</h2>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-javascript">
-                            alert("ENTER PROGRAM CODE HERE");
+                            function getValues(){
+                                let loan = document.getElementById("amount").value;
+                                let payments = document.getElementById("payments").value;
+                                let rate = document.getElementById("rate").value;
+                                mPayments = monthlyPayments(payments,loan, rate);
+                                displayResults(payments, loan, rate, mPayments)
+                            }
+                            function monthlyPayments(payment,loan,rate){
+                                let monthlyPayment = (loan)*(rate/1200)/(1- Math.pow((1+ rate/1200), -payment));
+                                monthlyPayment = monthlyPayment.toFixed(2);
+                                return monthlyPayment;
+                            }
+                            function displayResults(months, loan, rate, mPayments){
+                                let rUpdate = "";
+                                let tInterest = 0;
+                                let originalLoan = parseInt(loan);
+                                let pDisplay = "$"+mPayments;
+                                document.getElementById("totalPrincipalDisplay").innerHTML = "$" + originalLoan;
+                                for(term = 1; term<= months; term++){
+                                    let interest = (loan*rate/1200);
+                                    let principal = (mPayments - interest);
+                                    tInterest += interest;     
+                                    loan -= principal;
+                                    interest = Math.round((interest + Number.EPSILON)*100)/100;
+                                    principal = Math.round((principal + Number.EPSILON)*100)/100;
+                                    loan = Math.round((loan + Number.EPSILON)*100)/100;
+                                    tInterest = Math.round((tInterest + Number.EPSILON)*100)/100;
+                                    rUpdate += `<tr><th>${term}</th><th>${mPayments}</th><th>${principal}</th><th>${interest}</th><th>${tInterest}</th><th>${loan}</th></tr>`;
+                                }
+                                
+                                tCost = originalLoan + tInterest;
+                                document.getElementById("results").innerHTML = rUpdate;
+                                document.getElementById("paymentDisplay").innerHTML = pDisplay;
+                                document.getElementById("totalInterestDisplay").innerHTML = "$" + Math.round((tInterest + Number.EPSILON)*100)/100;
+                                document.getElementById("totalCostDisplay").innerHTML = "$" + tCost.toFixed(2);
+                            }
                         </code>
                     </pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>HOW IS THE CODE STRUCTURED</p>
-                    <h5>FUNCTION NAME</h5>
-                    <p>FUNCTION DESCRIPTION</p>
+                    <h5>Code Structure</h5>
+                    
+                    <h5>getValues()</h5>
+                    <p>This function gets the loan amount, number of payments, and rate of interest from the user inputs. 
+                    It then calculates the monthly payments by calling monthlyPayments() and calls displayResults().</p>
+                    
+                    <h5>monthlyPayments()</h5>
+                    <p>This function multiplies the loan by the rate divided by 1200. 
+                    Then it divides this amount and rounds the amount within two decimal places to obtain the monthly payments 
+                    and returns the monthly payment amount to the getValues() function.</p>
+
+                    <h5>displayResults()</h5>
+                    <p>This function parses the loan amount into an integer. It then displays the principal payment to the website. 
+                    It runs a for loop from 1 to the amount of payments, and calculates the interest each time by multiplying loan by rate and dividing by 1200. 
+                    It then subtracts the monthly payments by the interest and adds the interest amount to the variable tInterest. 
+                    It deducts the principal from the loan and rounds the numbers. It then adds the information in HTML formatting to the rUpdate string. 
+                    It adds the original loan amount and the interest to represent the total cost. 
+                    Afterwards, it displays the payments, total interest and total cost to the user.</p>
                 </div>               
             </div>
         </div>
